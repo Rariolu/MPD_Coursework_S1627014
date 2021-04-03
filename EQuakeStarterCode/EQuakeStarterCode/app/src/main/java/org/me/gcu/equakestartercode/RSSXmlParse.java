@@ -2,6 +2,8 @@
 
 package org.me.gcu.equakestartercode;
 
+import android.util.Log;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -15,6 +17,7 @@ public class RSSXmlParse
 {
     enum PrevElementType
     {
+        NONE,
         CHANNEL,
         IMAGE,
         ITEM
@@ -22,33 +25,57 @@ public class RSSXmlParse
 
     public Channel Parse(String data)
     {
+        Log.e("Debug","Gets to parse method");
         Channel channel = new Channel();
+        LinkedList<Item> items = new LinkedList<Item>();
         try
         {
+
+            Log.e("Debug","Got into try-catch");
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
             XmlPullParser xpp = factory.newPullParser();
-            xpp.setInput(new StringReader(data));
+
+            StringReader stringReader = new StringReader(data);
+
+            if (stringReader == null)
+            {
+                Log.e("debug","WE HAVE A PROBLEM!!!");
+            }
+
+            xpp.setInput(stringReader);
+
+            Log.e("debug","definitely not stringreader");
 
             int eventType = xpp.getEventType();
 
-            LinkedList<Item> items = new LinkedList<Item>();
+            Log.e("debug","definitely not eventType");
+
+
+
             Item newestItem = null;
 
             Stack<PrevElementType> prevTypes = new Stack<PrevElementType>();
+            prevTypes.push(PrevElementType.NONE);
 
             while (eventType != XmlPullParser.END_DOCUMENT)
             {
+                Log.e("debug",String.valueOf(eventType));
+
+                //Log.e("debug","While loop started");
                 PrevElementType prevType = prevTypes.peek();
+                //Log.e("debug","peek worked");
                 switch(eventType)
                 {
                     case  XmlPullParser.START_DOCUMENT:
                     {
+                        Log.e("debug","Start Document");
                         break;
                     }
                     case XmlPullParser.START_TAG:
                     {
                         String name = xpp.getName().toLowerCase();
+                        Log.e("debug",name);
                         switch (name)
                         {
                             case "rss":
@@ -58,10 +85,12 @@ public class RSSXmlParse
                             case "channel":
                             {
                                 prevTypes.push(PrevElementType.CHANNEL);
+                                Log.e("debug","Got to channel open item");
                                 break;
                             }
                             case "title":
                             {
+                                Log.e("debug","title");
                                 String title = xpp.nextText();
                                 switch (prevType)
                                 {
@@ -131,6 +160,7 @@ public class RSSXmlParse
                             case "item":
                             {
                                 prevTypes.push(PrevElementType.ITEM);
+                                newestItem = new Item();
                                 break;
                             }
                             case "pubdate":
@@ -181,6 +211,7 @@ public class RSSXmlParse
                         {
                             case "item":
                             {
+                                Log.e("debug","item close tag");
                                 if (prevType == PrevElementType.ITEM)
                                 {
                                     prevTypes.pop();
@@ -204,18 +235,30 @@ public class RSSXmlParse
                         break;
                     }
                 }
+                Log.e("debug","pre-eventType");
+                eventType = xpp.next();
+                Log.e("debug","post-eventType");
             }
 
-            channel.SetItems(items);
+
         }
         catch (XmlPullParserException err)
         {
 
+            Log.e("error",err.getMessage());
         }
         catch (IOException ae1)
         {
-
+            Log.e("error",ae1.getMessage());
         }
+        catch (Exception err)
+        {
+            Log.e("error", err.getMessage());
+        }
+
+        Log.e("debug","got to return line");
+        Log.e("debug",String.valueOf(items.size()));
+        channel.SetItems(items);
         return channel;
     }
 }
