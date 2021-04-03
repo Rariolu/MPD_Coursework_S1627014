@@ -33,6 +33,10 @@ public class Item
     }
 
     String category;
+    public String GetCategory()
+    {
+        return category;
+    }
     public void SetCategory(String _category)
     {
         category = _category;
