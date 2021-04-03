@@ -2,10 +2,6 @@
 
 package org.me.gcu.equakestartercode;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,13 +9,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-
-import org.me.gcu.equakestartercode.R;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener
 {
