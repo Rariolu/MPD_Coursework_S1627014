@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 {
     private TextView rawDataDisplay;
     private Button startButton;
-    private String result;
+    private String result="";
     private String url1="";
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
 
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 while ((inputLine = in.readLine()) != null)
                 {
                     result = result + inputLine;
-                    Log.e("MyTag",inputLine);
+                    //Log.e("MyTag",inputLine);
 
                 }
                 in.close();
@@ -100,13 +100,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 Log.e("MyTag", "ioexception in run");
             }
 
-            //
-            // Now that you have the xml data you can parse it
-            //
-
-            // Now update the TextView to display raw XML data
-            // Probably not the best way to update TextView
-            // but we are just getting started !
             Channel channel = new RSSXmlParse().Parse(result);
 
             MainActivity.this.runOnUiThread(new Runnable()
@@ -123,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                     for (int i = 0; i <items.size(); i++)
                     {
                         Item item = items.get(i);
+                        //output += "Item Category: "+item.GetCategory();
                         output += "Item Description: "+item.GetDescription();
                     }
 
