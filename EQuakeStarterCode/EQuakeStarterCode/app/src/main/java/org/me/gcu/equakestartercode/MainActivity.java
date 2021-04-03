@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener
 {
@@ -106,12 +107,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             // Now update the TextView to display raw XML data
             // Probably not the best way to update TextView
             // but we are just getting started !
+            Channel channel = new RSSXmlParse().Parse(result);
 
             MainActivity.this.runOnUiThread(new Runnable()
             {
                 public void run() {
                     Log.d("UI thread", "I am the UI thread");
-                    rawDataDisplay.setText(result);
+
+                    LinkedList<Item> items = channel.GetItems();
+
+                    String output = "";
+
+                    Log.e("debug","gets to ui thread");
+
+                    for (int i = 0; i <items.size(); i++)
+                    {
+                        Item item = items.get(i);
+                        output += "Item Description: "+item.GetDescription();
+                    }
+
+                    rawDataDisplay.setText(output);
+
+                    //rawDataDisplay.setText(result);
                 }
             });
         }
