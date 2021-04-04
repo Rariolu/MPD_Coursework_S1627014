@@ -81,6 +81,4 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
-/.vs/MPD_Coursework_S1627014/v16/.suo
-/.vs/slnx.sqlite
-/.vs/ProjectSettings.json
+/.vs
