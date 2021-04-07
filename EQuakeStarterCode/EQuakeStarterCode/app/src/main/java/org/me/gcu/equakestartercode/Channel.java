@@ -2,6 +2,7 @@
 
 package org.me.gcu.equakestartercode;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -19,12 +20,12 @@ public class Channel
         link = _link;
     }
 
-    LinkedList<Item> items = new LinkedList<>();
-    public LinkedList<Item> GetItems()
+    ArrayList<Item> items = new ArrayList<>();
+    public ArrayList<Item> GetItems()
     {
         return items;
     }
-    public void SetItems(LinkedList<Item> _items)
+    public void SetItems(ArrayList<Item> _items)
     {
         items = _items;
     }
