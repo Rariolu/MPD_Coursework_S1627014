@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 {
                     Log.d("UI thread", "I am the UI thread");
 
-                    LinkedList<Item> items = channel.GetItems();
+                    ArrayList<Item> items = channel.GetItems();
 
                     String output = "";
 
@@ -121,25 +121,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                     for (Item item : items)
                     {
-                        itemStr.add(item.toString());
+                        itemStr.add(item.GetLocation());
                     }
 
                     Log.e("debug", String.valueOf(itemStr.size()));
 
-                    ArrayAdapter adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemStr);
+                    CustomArrayAdapter adapter = new CustomArrayAdapter(MainActivity.this, items);
+
+                    //ArrayAdapter adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemStr);
 
                     lstItems.setAdapter(adapter);
 
+                    //Set the height of the listview to whatever it needs to be
                     Utility.setListViewHeightBasedOnChildren(lstItems);
-
-                    /*for (int i = 0; i <items.size(); i++)
-                    {
-                        Item item = items.get(i);
-                        //output += "Item Category: "+item.GetCategory();
-                        output += "Item Description: "+item.GetDescription();
-                    }*/
-
-                    //rawDataDisplay.setText(output);
                 }
             });
         }
