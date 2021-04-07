@@ -2,6 +2,7 @@
 
 package org.me.gcu.equakestartercode;
 
+
 import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -10,8 +11,10 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 public class RSSXmlParse
 {
@@ -27,7 +30,7 @@ public class RSSXmlParse
     {
         Log.e("Debug","Gets to parse method");
         Channel channel = new Channel();
-        LinkedList<Item> items = new LinkedList<Item>();
+        ArrayList<Item> items = new ArrayList<Item>();
         try
         {
 
@@ -146,6 +149,21 @@ public class RSSXmlParse
                                         if (newestItem != null)
                                         {
                                             newestItem.SetDescription(description);
+
+                                            int lastColon = description.lastIndexOf(':');
+                                            String magStr = description.substring(lastColon+1);
+                                            float mag = Float.parseFloat(magStr);
+                                            newestItem.SetMagnitude(mag);
+
+                                            String locStartStr = "Location: ";
+                                            String locEndStr = " ; Lat/long";
+                                            int locationStart = description.indexOf(locStartStr)+locStartStr.length();
+                                            Log.e("debug","locationStart: "+String.valueOf(locationStart));
+                                            int locationEnd = description.indexOf(locEndStr);
+                                            Log.e("debug", "locationEnd: "+String.valueOf(locationEnd));
+                                            String location = description.substring(locationStart, locationEnd);
+                                            Log.e("debug", "locationStart: "+String.valueOf(locationStart)+"; locationEnd: "+String.valueOf(locationEnd)+"; Location: "+location);
+                                            newestItem.SetLocation(location);
                                         }
                                         break;
                                     }
