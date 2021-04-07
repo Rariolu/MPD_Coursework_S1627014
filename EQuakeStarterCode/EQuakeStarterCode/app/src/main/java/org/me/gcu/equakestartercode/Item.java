@@ -5,6 +5,10 @@ package org.me.gcu.equakestartercode;
 public class Item
 {
     String title;
+    public String GetTitle()
+    {
+        return title;
+    }
     public void SetTitle(String _title)
     {
         title = _title;
@@ -52,6 +56,26 @@ public class Item
     public void SetLongitude(float _longitude)
     {
         longitude = _longitude;
+    }
+
+    float magnitude;
+    public float GetMagnitude()
+    {
+        return magnitude;
+    }
+    public void SetMagnitude(float mag)
+    {
+        magnitude = mag;
+    }
+
+    String location;
+    public  String GetLocation()
+    {
+        return location;
+    }
+    public  void SetLocation(String loc)
+    {
+        location = loc;
     }
 
     public Item()
