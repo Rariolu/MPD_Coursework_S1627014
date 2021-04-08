@@ -126,9 +126,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                     Log.e("debug", String.valueOf(itemStr.size()));
 
-                    CustomArrayAdapter adapter = new CustomArrayAdapter(MainActivity.this, items);
-
-                    //ArrayAdapter adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemStr);
+                    ItemArrayAdapter adapter = new ItemArrayAdapter(MainActivity.this, items);
 
                     lstItems.setAdapter(adapter);
 
