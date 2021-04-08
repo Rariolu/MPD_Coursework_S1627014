@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Robbie Coyne S1627014-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.me.gcu.equakestartercode">
 
@@ -14,6 +13,10 @@
         android:theme="@style/Theme.EQuakeStarterCode"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SpecificItemActivity"
+            android:label="@string/title_activity_specific_item"
+            android:theme="@style/Theme.EQuakeStarterCode.NoActionBar"></activity>
+        <activity
             android:name=".SplashScreen"
             android:label="@string/title_activity_splash_screen"
             android:theme="@style/Theme.EQuakeStarterCode.NoActionBar">
@@ -22,14 +25,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".MainActivity">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
     </application>
 
