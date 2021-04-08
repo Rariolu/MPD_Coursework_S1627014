@@ -2,7 +2,9 @@ package org.me.gcu.equakestartercode;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +22,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item>
 {
     private final Context thisContext;
     private final ArrayList<Item> items;
-    public ItemArrayAdapter(@NonNull Context context, @LayoutRes ArrayList<Item> list)
+    public ItemArrayAdapter(@NonNull Context context, ArrayList<Item> list)
     {
         super(context, 0, list);
         thisContext = context;
@@ -70,6 +72,13 @@ public class ItemArrayAdapter extends ArrayAdapter<Item>
         textView.setBackgroundColor(colorNum);
 
         //textView.setBackgroundColor();
+
+        textView.setOnClickListener((View v) ->
+        {
+            Intent intent = new Intent(thisContext, SpecificItemActivity.class);
+            intent.putExtra("item", item);
+            thisContext.startActivity(intent);
+        });
 
         return textView;
     }
