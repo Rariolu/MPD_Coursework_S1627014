@@ -2,7 +2,9 @@
 
 package org.me.gcu.equakestartercode;
 
-public class Item
+import java.io.Serializable;
+
+public class Item implements Serializable
 {
     String title;
     public String GetTitle()
