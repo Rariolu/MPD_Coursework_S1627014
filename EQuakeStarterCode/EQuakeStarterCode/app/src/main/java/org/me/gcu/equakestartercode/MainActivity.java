@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     //private TextView rawDataDisplay;
     private Button startButton;
     private ListView lstItems;
-    private String result="";
-    private String url1="";
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
 
     @Override
@@ -39,21 +37,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.e("MyTag","in onCreate");
-        // Set up the raw links to the graphical components
-        //rawDataDisplay = (TextView)findViewById(R.id.rawDataDisplay);
-        startButton = (Button)findViewById(R.id.startButton);
+
+        //startButton = (Button)findViewById(R.id.startButton);
         lstItems = (ListView)findViewById(R.id.lstItems);
 
-        startButton.setOnClickListener(this);
-        Log.e("MyTag","after startButton");
-        // More Code goes here
-    }
-
-    public void onClick(View aview)
-    {
-        Log.e("MyTag","in onClick");
-        startProgress();
-        Log.e("MyTag","after startProgress");
+        //startButton.setOnClickListener(this);
+        new Thread(new Task(urlSource)).start();
     }
 
     public void startProgress()
@@ -68,18 +57,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     {
         private String url;
 
-        public Task(String aurl)
+        public Task(String _url)
         {
-            url = aurl;
+            url = _url;
         }
 
         @Override
         public void run()
         {
-            URL aurl;
+            URL urlInstance;
             URLConnection yc;
             BufferedReader in = null;
             String inputLine = "";
+            String result = "";
 
 
             Log.e("MyTag","in run");
@@ -87,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             try
             {
                 Log.e("MyTag","in try");
-                aurl = new URL(url);
-                yc = aurl.openConnection();
+                urlInstance = new URL(url);
+                yc = urlInstance.openConnection();
                 in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
                 Log.e("MyTag","after ready");
 
