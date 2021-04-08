@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class SpecificItemActivity extends AppCompatActivity
 {
     TextView lblTitle;
+    TextView lblMagnitude;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -21,10 +22,12 @@ public class SpecificItemActivity extends AppCompatActivity
         setContentView(R.layout.activity_specific_item);
 
         lblTitle = (TextView)findViewById(R.id.lblTitle);
+        lblMagnitude = (TextView)findViewById(R.id.lblMagnitude);
 
 
         Item thisItem = (Item)getIntent().getSerializableExtra("item");
-        lblTitle.setText(thisItem.GetTitle());
+        lblTitle.setText(thisItem.GetLocation());
 
+        lblMagnitude.setText("Magnitude: "+String.valueOf(thisItem.GetMagnitude()));
     }
 }
