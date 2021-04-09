@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -53,7 +54,31 @@ public class SpecificItemActivity extends AppCompatActivity
             mMap = googleMap;
 
             LatLng itemPos = new LatLng(thisItem.GetLatitude(),thisItem.GetLongitude());
-            mMap.addMarker(new MarkerOptions().position(itemPos).title(thisItem.GetLocation()));
+
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(itemPos);
+            markerOptions.title(thisItem.GetLocation()+": "+String.valueOf(thisItem.GetMagnitude()));
+
+            float mag = thisItem.GetMagnitude();
+
+            float colorNum = BitmapDescriptorFactory.HUE_GREEN;
+
+            if (mag  <=  1.0)
+            {
+                colorNum = BitmapDescriptorFactory.HUE_YELLOW;
+            }
+            else if (mag <= 2.0)
+            {
+                colorNum = BitmapDescriptorFactory.HUE_ORANGE;
+            }
+            else
+            {
+                colorNum = BitmapDescriptorFactory.HUE_RED;
+            }
+
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(colorNum));
+
+            mMap.addMarker(markerOptions);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(itemPos));
         });
     }
