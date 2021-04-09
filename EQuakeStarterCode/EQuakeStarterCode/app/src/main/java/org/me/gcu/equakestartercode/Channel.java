@@ -2,11 +2,12 @@
 
 package org.me.gcu.equakestartercode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 
-public class Channel
+public class Channel implements Serializable
 {
     String title;
     public void SetTitle(String _title)
