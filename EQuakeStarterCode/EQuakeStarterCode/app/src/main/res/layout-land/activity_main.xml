@@ -1,10 +1,60 @@
 <!--Robbie Coyne S1627014-->
 <!--  MPD XML Starter code Semester B Session 2018 2019  -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <TextView android:id="@+id/salutation" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="Welcome to Mobile Platform Development landscape bitatc"/>
-        <Button android:id="@+id/startButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Press to get data"/>
-        <TextView android:id="@+id/acknowledgement" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="Contains British Geological Survey materials ©NERC 2019"/>
-        <TextView android:id="@+id/rawDataDisplay" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="Raw Data is Displayed here"/>
-    </LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView android:id="@+id/salutation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textSize="20sp"
+            android:text="Welcome to Mobile Platform Development"/>
+
+        <TextView
+            android:id="@+id/acknowledgement"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Contains British Geological Survey materials ©NERC 2019"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/salutation" />
+
+        <Button
+            android:id="@+id/btnSearchParams"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/acknowledgement"
+            android:text="Set search parameters:"
+        />
+
+        <Button
+            android:id="@+id/btnOpenMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open all in map"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSearchParams"
+        />
+
+        <ListView
+            android:id="@+id/lstItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnOpenMap"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
