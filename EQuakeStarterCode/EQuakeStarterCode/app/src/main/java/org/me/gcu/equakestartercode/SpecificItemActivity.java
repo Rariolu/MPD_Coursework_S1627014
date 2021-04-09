@@ -37,7 +37,7 @@ public class SpecificItemActivity extends AppCompatActivity
         lblTitle.setText(thisItem.GetLocation());
         lblCoordinates.setText("Latitude: "+String.valueOf(thisItem.GetLatitude())+"; Longitude: "+String.valueOf(thisItem.GetLongitude()));
         lblMagnitude.setText("Magnitude: "+String.valueOf(thisItem.GetMagnitude()));
-        lblDepth.setText("Depth: "+String.valueOf(thisItem.GetDepth()));
+        lblDepth.setText("Depth: "+String.valueOf(thisItem.GetDepth())+"km");
         lblDate.setText("Date: "+String.valueOf(thisItem.GetPublicationDate()));
     }
 }
