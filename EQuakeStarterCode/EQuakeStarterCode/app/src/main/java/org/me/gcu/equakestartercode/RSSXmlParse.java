@@ -1,4 +1,4 @@
-//Robbie Coyne S1627014
+//Sophie Coyne S1627014
 
 package org.me.gcu.equakestartercode;
 

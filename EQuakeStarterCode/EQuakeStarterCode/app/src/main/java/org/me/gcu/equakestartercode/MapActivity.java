@@ -1,3 +1,5 @@
+//Sophie Coyne S1627014
+
 package org.me.gcu.equakestartercode;
 
 import android.graphics.Color;
