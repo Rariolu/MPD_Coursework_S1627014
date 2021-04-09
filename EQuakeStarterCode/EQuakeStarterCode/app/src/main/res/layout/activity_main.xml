@@ -16,16 +16,6 @@
             android:textSize="20sp"
             android:text="Welcome to Mobile Platform Development"/>
 
-        <!--
-        <Button android:id="@+id/startButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/salutation"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:text="Press to get data"/>
-            -->
-
         <TextView
             android:id="@+id/acknowledgement"
             android:layout_width="fill_parent"
@@ -36,6 +26,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/salutation" />
 
+        <Button
+            android:id="@+id/btnSearchParams"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/acknowledgement"
+            android:text="Set search parameters:"
+        />
+
         <ListView
             android:id="@+id/lstItems"
             android:layout_width="match_parent"
@@ -43,6 +43,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/acknowledgement" />
+            app:layout_constraintTop_toBottomOf="@id/btnSearchParams"
+        />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

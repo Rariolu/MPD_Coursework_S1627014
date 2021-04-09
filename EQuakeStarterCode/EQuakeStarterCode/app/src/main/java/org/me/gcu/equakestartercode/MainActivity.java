@@ -2,6 +2,7 @@
 
 package org.me.gcu.equakestartercode;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.me.gcu.equakestartercode.SearchParams;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,12 +27,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener
+public class MainActivity extends AppCompatActivity
 {
     //private TextView rawDataDisplay;
-    private Button startButton;
+    private Button btnSearchParams;
     private ListView lstItems;
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
+    private SearchParams prevSearchParams = new SearchParams();
+
+    final static int REQUEST_SEARCHPARAMS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,17 +44,39 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         setContentView(R.layout.activity_main);
         Log.e("MyTag","in onCreate");
 
-        //startButton = (Button)findViewById(R.id.startButton);
+        btnSearchParams = (Button)findViewById(R.id.btnSearchParams);
+        btnSearchParams.setOnClickListener((View v) ->
+        {
+            Intent intent = new Intent(MainActivity.this, SearchParameterActivity.class);
+            intent.putExtra("searchparams", prevSearchParams);
+            startActivityForResult(intent, REQUEST_SEARCHPARAMS);
+        });
+
         lstItems = (ListView)findViewById(R.id.lstItems);
 
-        //startButton.setOnClickListener(this);
-        new Thread(new Task(urlSource)).start();
+        new Thread(new Task(urlSource, new SearchParams())).start();
+
+        DateTime d1 = new DateTime(2021,1,1);
+        DateTime d2 = new DateTime(2021,2,1);
+        DateTime d3 = new DateTime(2020, 12, 31);
+
     }
 
-    public void startProgress()
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        // Run network access on a separate thread;
-        new Thread(new Task(urlSource)).start();
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode)
+        {
+            case REQUEST_SEARCHPARAMS:
+            {
+                SearchParams searchParams = (SearchParams)data.getSerializableExtra("searchparams");
+                prevSearchParams = searchParams;
+                new Thread(new Task(urlSource, searchParams)).start();
+
+                break;
+            }
+        }
     }
 
     // Need separate thread to access the internet resource over network
@@ -56,10 +84,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private class Task implements Runnable
     {
         private String url;
+        private SearchParams thisSearchParams;
 
-        public Task(String _url)
+        public Task(String _url, SearchParams searchParams)
         {
             url = _url;
+            thisSearchParams = searchParams;
         }
 
         @Override
@@ -70,8 +100,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             BufferedReader in = null;
             String inputLine = "";
             String result = "";
-
-
             Log.e("MyTag","in run");
 
             try
@@ -107,16 +135,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                     Log.e("debug","gets to ui thread");
 
-                    ArrayList<String> itemStr = new ArrayList<>();
-
-                    for (Item item : items)
-                    {
-                        itemStr.add(item.GetLocation());
-                    }
-
-                    Log.e("debug", String.valueOf(itemStr.size()));
-
-                    ItemArrayAdapter adapter = new ItemArrayAdapter(MainActivity.this, items);
+                    ItemArrayAdapter adapter = new ItemArrayAdapter(MainActivity.this, items, thisSearchParams);
 
                     lstItems.setAdapter(adapter);
 
@@ -125,7 +144,5 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 }
             });
         }
-
     }
 }
-
