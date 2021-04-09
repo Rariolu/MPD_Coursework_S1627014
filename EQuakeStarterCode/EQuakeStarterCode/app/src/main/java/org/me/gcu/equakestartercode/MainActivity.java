@@ -2,6 +2,8 @@
 
 package org.me.gcu.equakestartercode;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,13 +72,29 @@ public class MainActivity extends AppCompatActivity
         {
             case REQUEST_SEARCHPARAMS:
             {
-                SearchParams searchParams = (SearchParams)data.getSerializableExtra("searchparams");
-                prevSearchParams = searchParams;
-                new Thread(new Task(urlSource, searchParams)).start();
-
+                if (resultCode == RESULT_OK)
+                {
+                    SearchParams searchParams = (SearchParams) data.getSerializableExtra("searchparams");
+                    prevSearchParams = searchParams;
+                    new Thread(new Task(urlSource, searchParams)).start();
+                }
                 break;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage("Are you sure you want to close the app?");
+        alert.setCancelable(false);
+        alert.setPositiveButton("Yes",(DialogInterface dialog, int id) ->
+        {
+            this.finishAffinity();
+        });
+        alert.setNegativeButton("No", null);
+        alert.show();
     }
 
     // Need separate thread to access the internet resource over network
