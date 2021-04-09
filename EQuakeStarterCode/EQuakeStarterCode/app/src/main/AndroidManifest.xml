@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EQuakeStarterCode"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_map"
+            android:theme="@style/Theme.EQuakeStarterCode.NoActionBar"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -20,7 +24,7 @@
         <activity
             android:name=".SearchParameterActivity"
             android:label="@string/title_activity_search_parameter"
-            android:theme="@style/Theme.EQuakeStarterCode.NoActionBar"></activity>
+            android:theme="@style/Theme.EQuakeStarterCode.NoActionBar" />
         <activity
             android:name=".SpecificItemActivity"
             android:label="@string/title_activity_specific_item"
@@ -35,9 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
