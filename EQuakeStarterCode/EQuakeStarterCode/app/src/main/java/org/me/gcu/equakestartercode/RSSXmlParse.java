@@ -33,28 +33,15 @@ public class RSSXmlParse
         ArrayList<Item> items = new ArrayList<Item>();
         try
         {
-
-            Log.e("Debug","Got into try-catch");
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
             XmlPullParser xpp = factory.newPullParser();
 
             StringReader stringReader = new StringReader(data);
 
-            if (stringReader == null)
-            {
-                Log.e("debug","WE HAVE A PROBLEM!!!");
-            }
-
             xpp.setInput(stringReader);
 
-            Log.e("debug","definitely not stringreader");
-
             int eventType = xpp.getEventType();
-
-            Log.e("debug","definitely not eventType");
-
-
 
             Item newestItem = null;
 
@@ -63,11 +50,7 @@ public class RSSXmlParse
 
             while (eventType != XmlPullParser.END_DOCUMENT)
             {
-                Log.e("debug",String.valueOf(eventType));
-
-                //Log.e("debug","While loop started");
                 PrevElementType prevType = prevTypes.peek();
-                //Log.e("debug","peek worked");
                 switch(eventType)
                 {
                     case  XmlPullParser.START_DOCUMENT:
@@ -78,7 +61,6 @@ public class RSSXmlParse
                     case XmlPullParser.START_TAG:
                     {
                         String name = xpp.getName().toLowerCase();
-                        Log.e("debug",name);
                         switch (name)
                         {
                             case "rss":
@@ -88,12 +70,10 @@ public class RSSXmlParse
                             case "channel":
                             {
                                 prevTypes.push(PrevElementType.CHANNEL);
-                                Log.e("debug","Got to channel open item");
                                 break;
                             }
                             case "title":
                             {
-                                Log.e("debug","title");
                                 String title = xpp.nextText();
                                 switch (prevType)
                                 {
@@ -158,12 +138,17 @@ public class RSSXmlParse
                                             String locStartStr = "Location: ";
                                             String locEndStr = " ; Lat/long";
                                             int locationStart = description.indexOf(locStartStr)+locStartStr.length();
-                                            Log.e("debug","locationStart: "+String.valueOf(locationStart));
                                             int locationEnd = description.indexOf(locEndStr);
-                                            Log.e("debug", "locationEnd: "+String.valueOf(locationEnd));
                                             String location = description.substring(locationStart, locationEnd);
-                                            Log.e("debug", "locationStart: "+String.valueOf(locationStart)+"; locationEnd: "+String.valueOf(locationEnd)+"; Location: "+location);
                                             newestItem.SetLocation(location);
+
+                                            String depthStartStr = "Depth: ";
+                                            String depthEndStr = " km ; Magnitude";
+                                            int depthStart = description.indexOf(depthStartStr)+depthStartStr.length();
+                                            int depthEnd = description.indexOf(depthEndStr);
+                                            String depthStr = description.substring(depthStart, depthEnd);
+                                            int depth = Integer.parseInt(depthStr);
+                                            newestItem.SetDepth(depth);
                                         }
                                         break;
                                     }
@@ -187,6 +172,19 @@ public class RSSXmlParse
                                 if (newestItem != null)
                                 {
                                     newestItem.SetPublicationDateStr(pubDate);
+
+                                    String dayStr = pubDate.substring(5, 7);
+
+                                    String monthStr = pubDate.substring(8, 11).toLowerCase();
+
+                                    String yearStr = pubDate.substring(12, 16);
+
+                                    DateTime date = new DateTime(yearStr, monthStr, dayStr);
+
+                                    newestItem.SetDate(date);
+
+                                    Log.e("debug","date: "+date.toString());
+
                                 }
                                 break;
                             }
@@ -199,8 +197,9 @@ public class RSSXmlParse
                                 }
                                 break;
                             }
-                            case "geo:lat":
+                            case "lat":
                             {
+                                Log.e("debug","Latitude parse");
                                 String strLat = xpp.nextText();
                                 float latitude = Float.parseFloat(strLat);
                                 //Integer latitude = Integer.parseInt(strLat);
@@ -208,15 +207,22 @@ public class RSSXmlParse
                                 {
                                     newestItem.SetLatitude(latitude);
                                 }
+                                break;
                             }
-                            case "geo:long":
+                            case "long":
                             {
+                                Log.e("debug","Longitude parse");
                                 String strLong = xpp.nextText();
                                 float longitude = Float.parseFloat(strLong);
                                 if (newestItem != null)
                                 {
                                     newestItem.SetLongitude(longitude);
                                 }
+                                break;
+                            }
+                            default:
+                            {
+                                Log.e("debug", "Unrecognised tag: "+name+";");
                                 break;
                             }
                         }
@@ -229,7 +235,6 @@ public class RSSXmlParse
                         {
                             case "item":
                             {
-                                Log.e("debug","item close tag");
                                 if (prevType == PrevElementType.ITEM)
                                 {
                                     prevTypes.pop();
@@ -253,9 +258,7 @@ public class RSSXmlParse
                         break;
                     }
                 }
-                Log.e("debug","pre-eventType");
                 eventType = xpp.next();
-                Log.e("debug","post-eventType");
             }
 
 
