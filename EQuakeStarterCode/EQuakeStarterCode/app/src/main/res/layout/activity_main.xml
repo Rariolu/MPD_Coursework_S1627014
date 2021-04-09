@@ -36,6 +36,16 @@
             android:text="Set search parameters:"
         />
 
+        <Button
+            android:id="@+id/btnOpenMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open all in map"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSearchParams"
+        />
+
         <ListView
             android:id="@+id/lstItems"
             android:layout_width="match_parent"
@@ -43,7 +53,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnSearchParams"
+            app:layout_constraintTop_toBottomOf="@id/btnOpenMap"
         />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

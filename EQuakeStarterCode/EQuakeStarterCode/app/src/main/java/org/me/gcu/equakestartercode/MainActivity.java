@@ -33,12 +33,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
-    //private TextView rawDataDisplay;
     private Button btnSearchParams;
+    private Button btnOpenMap;
     private ListView lstItems;
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
     private SearchParams prevSearchParams = new SearchParams();
 
+    private Channel prevChannel;
 
     final static int REQUEST_SEARCHPARAMS = 1;
 
@@ -55,6 +56,14 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, SearchParameterActivity.class);
             intent.putExtra("searchparams", prevSearchParams);
             startActivityForResult(intent, REQUEST_SEARCHPARAMS);
+        });
+
+        btnOpenMap = (Button)findViewById(R.id.btnOpenMap);
+        btnOpenMap.setOnClickListener((View v) ->
+        {
+            Intent intent = new Intent(MainActivity.this, MapActivity.class);
+            intent.putExtra("channel", prevChannel);
+            startActivity(intent);
         });
 
         lstItems = (ListView)findViewById(R.id.lstItems);
@@ -137,6 +146,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             Channel channel = new RSSXmlParse().Parse(result);
+            prevChannel = channel;
 
             MainActivity.this.runOnUiThread(() ->
             {

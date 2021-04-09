@@ -11,4 +11,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_specific_item">SpecificItemActivity</string>
     <string name="title_activity_search_parameter">SearchParameterActivity</string>
+    <string name="title_activity_map">MapActivity</string>
 </resources>
