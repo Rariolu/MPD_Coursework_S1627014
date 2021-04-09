@@ -5,6 +5,7 @@ package org.me.gcu.equakestartercode;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.me.gcu.equakestartercode.SearchParams;
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity
             thisSearchParams = searchParams;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run()
         {
@@ -141,10 +144,8 @@ public class MainActivity extends AppCompatActivity
 
             Channel channel = new RSSXmlParse().Parse(result);
 
-            MainActivity.this.runOnUiThread(new Runnable()
+            MainActivity.this.runOnUiThread(() ->
             {
-                public void run()
-                {
                     Log.d("UI thread", "I am the UI thread");
 
                     ArrayList<Item> items = channel.GetItems();
@@ -159,7 +160,6 @@ public class MainActivity extends AppCompatActivity
 
                     //Set the height of the listview to whatever it needs to be
                     Utility.setListViewHeightBasedOnChildren(lstItems);
-                }
             });
         }
     }
