@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EQuakeStarterCode"
         android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCQOT6aU3BozKgRF3b-nBuwrtFNRVtXYvs" />
+
         <activity
             android:name=".SearchParameterActivity"
             android:label="@string/title_activity_search_parameter"
@@ -32,13 +37,6 @@
         </activity>
         <activity android:name=".MainActivity">
 
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
     </application>
 
