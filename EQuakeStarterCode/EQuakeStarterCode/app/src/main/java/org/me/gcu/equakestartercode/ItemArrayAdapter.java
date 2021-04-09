@@ -43,6 +43,10 @@ public class ItemArrayAdapter extends ArrayAdapter<Item>
                 boolean maxConstraint = !itemDate.IsAfter(endDate) || itemDate.equals(endDate);
                 return minConstraint && maxConstraint;
             }
+            else if (searchParams.UsingSpecificDate())
+            {
+                return itemDate.equals(searchParams.GetSpecificDate());
+            }
             return true;
         };
         if (searchParams.Sort())
@@ -65,7 +69,6 @@ public class ItemArrayAdapter extends ArrayAdapter<Item>
                         }
                         case MOST_RECENT_TO_LEAST_RECENT:
                         {
-                            Log.e("debug", "mostrecenttoleast");
                             return item1.GetDate().IsAfter(item2.GetDate()) ? -1 : 1;
                         }
                         case LEAST_RECENT_TO_MOST_RECENT:
@@ -167,7 +170,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item>
 
         Item item = items.get(position);
 
-        textView.setText(item.GetLocation());
+        textView.setText(item.GetLocation()+": "+String.valueOf(item.GetMagnitude()));
         float magnitude = item.GetMagnitude();
 
         float magNorm = magnitude / 10.0f;
