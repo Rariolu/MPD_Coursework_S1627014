@@ -33,6 +33,10 @@ public class Item implements Serializable
     }
 
     String publicationDateStr;
+    public String GetPublicationDate()
+    {
+        return publicationDateStr;
+    }
     public void SetPublicationDateStr(String _publicationDateStr)
     {
         publicationDateStr = _publicationDateStr;
@@ -49,12 +53,20 @@ public class Item implements Serializable
     }
 
     float latitude;
+    public float GetLatitude()
+    {
+        return latitude;
+    }
     public void SetLatitude(float _latitude)
     {
         latitude = _latitude;
     }
 
     float longitude;
+    public float GetLongitude()
+    {
+        return longitude;
+    }
     public void SetLongitude(float _longitude)
     {
         longitude = _longitude;
@@ -78,6 +90,26 @@ public class Item implements Serializable
     public  void SetLocation(String loc)
     {
         location = loc;
+    }
+
+    DateTime date;
+    public DateTime GetDate()
+    {
+        return date;
+    }
+    public void SetDate(DateTime _date)
+    {
+        date = _date;
+    }
+
+    int depth;
+    public int GetDepth()
+    {
+        return depth;
+    }
+    public void SetDepth(int _depth)
+    {
+        depth = _depth;
     }
 
     public Item()
