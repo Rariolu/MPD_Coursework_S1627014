@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
     private SearchParams prevSearchParams = new SearchParams();
 
+
     final static int REQUEST_SEARCHPARAMS = 1;
 
     @Override
@@ -59,10 +60,6 @@ public class MainActivity extends AppCompatActivity
         lstItems = (ListView)findViewById(R.id.lstItems);
 
         new Thread(new Task(urlSource, new SearchParams())).start();
-
-        DateTime d1 = new DateTime(2021,1,1);
-        DateTime d2 = new DateTime(2021,2,1);
-        DateTime d3 = new DateTime(2020, 12, 31);
 
     }
 
@@ -121,15 +118,12 @@ public class MainActivity extends AppCompatActivity
             BufferedReader in = null;
             String inputLine = "";
             String result = "";
-            Log.e("MyTag","in run");
 
             try
             {
-                Log.e("MyTag","in try");
                 urlInstance = new URL(url);
                 yc = urlInstance.openConnection();
                 in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                Log.e("MyTag","after ready");
 
                 while ((inputLine = in.readLine()) != null)
                 {
@@ -146,20 +140,20 @@ public class MainActivity extends AppCompatActivity
 
             MainActivity.this.runOnUiThread(() ->
             {
-                    Log.d("UI thread", "I am the UI thread");
+                Log.d("UI thread", "I am the UI thread");
 
-                    ArrayList<Item> items = channel.GetItems();
+                ArrayList<Item> items = channel.GetItems();
 
-                    String output = "";
+                String output = "";
 
-                    Log.e("debug","gets to ui thread");
+                Log.e("debug", "gets to ui thread");
 
-                    ItemArrayAdapter adapter = new ItemArrayAdapter(MainActivity.this, items, thisSearchParams);
+                ItemArrayAdapter adapter = new ItemArrayAdapter(MainActivity.this, items, thisSearchParams);
 
-                    lstItems.setAdapter(adapter);
+                lstItems.setAdapter(adapter);
 
-                    //Set the height of the listview to whatever it needs to be
-                    Utility.setListViewHeightBasedOnChildren(lstItems);
+                //Set the height of the listview to whatever it needs to be
+                Utility.setListViewHeightBasedOnChildren(lstItems);
             });
         }
     }
