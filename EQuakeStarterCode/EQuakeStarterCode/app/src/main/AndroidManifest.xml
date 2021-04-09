@@ -13,9 +13,13 @@
         android:theme="@style/Theme.EQuakeStarterCode"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SearchParameterActivity"
+            android:label="@string/title_activity_search_parameter"
+            android:theme="@style/Theme.EQuakeStarterCode.NoActionBar"></activity>
+        <activity
             android:name=".SpecificItemActivity"
             android:label="@string/title_activity_specific_item"
-            android:theme="@style/Theme.EQuakeStarterCode.NoActionBar"></activity>
+            android:theme="@style/Theme.EQuakeStarterCode.NoActionBar" />
         <activity
             android:name=".SplashScreen"
             android:label="@string/title_activity_splash_screen"
