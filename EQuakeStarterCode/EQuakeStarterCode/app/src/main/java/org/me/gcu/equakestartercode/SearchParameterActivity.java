@@ -1,5 +1,7 @@
 package org.me.gcu.equakestartercode;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -176,5 +178,21 @@ public class SearchParameterActivity extends AppCompatActivity
             setResult(RESULT_OK, intent);
             finish();
         });
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage("Are you sure you want to go back without applying search parameters?");
+        alert.setCancelable(false);
+        alert.setPositiveButton("Yes",(DialogInterface dialog, int id) ->
+        {
+            Intent intent = new Intent();
+            setResult(RESULT_CANCELED, intent);
+            finish();
+        });
+        alert.setNegativeButton("No", null);
+        alert.show();
     }
 }
